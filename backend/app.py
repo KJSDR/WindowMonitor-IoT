@@ -72,7 +72,7 @@ def get_latest():
 
 
 @app.route('/api/health')
-def health()
+def health():
     """Health check endpoint"""
     return jsonify({"status": "ok"})
 
@@ -106,3 +106,10 @@ def calculate_recommendation(temp, humidity, air_quality):
             "reason": "All conditions favorable"
         }
 
+if __name__ == '__main__':
+
+    serial_thread = threading.Thread(target=read_serial_continuously, daemon=True)
+    serial_thread.start()
+
+    print("Starting API server on http://localhost:5000")
+    app.run(debug=True, port=5000)
