@@ -16,7 +16,7 @@ latest_reading = {
     "timespamp": 0
 }
 
-SERIAL_PORT = '/dev/cu.usbserial-XXXX'
+SERIAL_PORT = '/dev/cu.usbserial-XXXX' #dont forget o update this to correct name
 BAUD_RATE = 115200
 
 def read_serial_continuously():
@@ -29,6 +29,19 @@ def read_serial_continuously():
 
         while True:
             if ser.in_Waiting > 0:
+                line = ser.readline().decode('utf-8').strip()
+
+                try:
+                    data = json.loads(line)
+                    latest_reading = data
+                    print(f"Updated: Temp={data['temp']}°F, Humidity={data['humidity']}%, AQ={data['air_quality']}")
+                except json.JSONDecodeError:
+                    pass
+
+            time.sleep(0.1)
+
+    except Exception as e:
+        print(f"Serial error: {e}")
 
 
 
