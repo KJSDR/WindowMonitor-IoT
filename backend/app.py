@@ -71,16 +71,38 @@ def get_latest():
         print(f"Serial error: {e}")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 @app.route('/api/health')
+def health()
+    """Health check endpoint"""
+    return jsonify({"status": "ok"})
+
+def calculate_recommendation(temp, humidity, air_quality):
+    """Simple decision logic"""
+
+    TEMP_MIN = 60
+    TEMP_MAX = 78
+    HUMIDITY_MAX = 70
+    AQ_MIN = 500
+
+    reasons = []
+
+    if air_quality < AQ_min:
+        reasons.append("Poor air quality")
+    if temp > TEMP_MAX:
+        reasons.append("Temperature too high")
+    if temp < TEMP_MIN:
+        reasons.append("Temperature too low")
+    if humidity > HUMIDITY_MAX:
+        reasons.append("Humidity too high")
+
+    if reasons:
+        return {
+            "recommendation": "CLOSE",
+            "reason": ", ".join(reasons)
+        }
+    else:
+        return {
+            "recommendation": "OPEN",
+            "reason": "All conditions favorable"
+        }
+
