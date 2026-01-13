@@ -65,6 +65,10 @@ def get_latest():
                 except json.JSONDecodeError:
                     pass
 
+            time.sleep(0.1)
+
+    except Exception as e:
+        print(f"Serial error: {e}")
 
 
 
