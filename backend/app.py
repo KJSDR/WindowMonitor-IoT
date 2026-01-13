@@ -20,7 +20,7 @@ SERIAL_PORT = '/dev/cu.usbserial-XXXX' #dont forget o update this to correct nam
 BAUD_RATE = 115200
 
 def read_serial_continuously():
-    """placeholder"""
+    """Background thread that reads serial data"""
     global latest_reading
 
     try:
@@ -45,8 +45,38 @@ def read_serial_continuously():
 
 
 
-
-
 @app.route('/api/latest')
+def get_latest():
+    """Return most recent sensor reading"""
+    global latest_reading
+
+    try:
+        ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
+        print(f"Connected to {SERIAL_PORT}")
+
+        while True:
+            if ser.in_waiting > 0:
+                line = ser.readline().decode('utf-8').strip()
+
+                try:
+                    data = json.loads(line)
+                    latest_reading = data
+                    print(f"Updated: Temp={data['temp']}°F, Humidity={data['humidity']}%, AQ={data['air_quality']}")
+                except json.JSONDecodeError:
+                    pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/api/health')
