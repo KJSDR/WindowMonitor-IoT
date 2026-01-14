@@ -25,4 +25,46 @@ def init_db():
     print("Database intialized")
 
 def insert_reading(data):
-    
+    '''Insert sensor reading into database'''
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        INSERT INTO readings (timestamp, temperature, humidity, air_quality)
+        VALUES (?, ?, ?, ?)
+    ''', (
+        data.get('server_time', datetime.now().isoformat()),
+        data.get('temp'),
+        data.get('humidity'),
+        data.get('air_quality')
+    ))
+
+    conn.commit()
+    conn.close()
+
+def get_recent_readings(limit=100):
+    """Get most recent readings"""
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        SELECT timestamp, temperature, humidity, air_quality
+        FROM readings
+        ORDER BY created_at DESC
+        LIMIT ?
+    ''', (limit,))
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return [
+        {
+            'timestamp': row[0],
+            'temperature': row[1],
+            'humidity': row[2],
+            'air_quality': row[3]
+        }
+        for rows in rows
+    ]
+
+init_db()
