@@ -35,6 +35,18 @@ def read_serial():
 
             time.sleep(0.1)
 
+    except serial.SerialException as e:
+        print(f"Error: {e}")
+        print("\nAvailable ports:")
+        import serial.tools.list_ports
+        ports = serial.tools.list.ports.components()
+        for port in ports:
+            print(f" - {port.device}")
+
+    except KeyboardInterrupt:
+        print("n\n Stopped by user")
+        ser.close()
+
 
 
 
