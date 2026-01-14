@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 import serial
 import json
@@ -13,7 +13,7 @@ latest_reading = {
     "temp": 0,
     "humidity": 0,
     "air_quality": 0,
-    "timespamp": 0
+    "timestamp": 0
 }
 
 SERIAL_PORT = '/dev/cu.usbserial-022AF20E' #update to corredct name
@@ -21,33 +21,6 @@ BAUD_RATE = 115200
 
 def read_serial_continuously():
     """Background thread that reads serial data"""
-    global latest_reading
-
-    try:
-        ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
-        print(f"Connected to {SERIAL_PORT}")
-
-        while True:
-            if ser.in_Waiting > 0:
-                line = ser.readline().decode('utf-8').strip()
-
-                try:
-                    data = json.loads(line)
-                    latest_reading = data
-                    print(f"Updated: Temp={data['temp']}°F, Humidity={data['humidity']}%, AQ={data['air_quality']}")
-                except json.JSONDecodeError:
-                    pass
-
-            time.sleep(0.1)
-
-    except Exception as e:
-        print(f"Serial error: {e}")
-
-
-
-@app.route('/api/latest')
-def get_latest():
-    """Return most recent sensor reading"""
     global latest_reading
 
     try:
@@ -71,6 +44,23 @@ def get_latest():
         print(f"Serial error: {e}")
 
 
+
+@app.route('/api/latest')
+def get_latest():
+    """Return the most recent sensor reading"""
+    
+    recommendation = calculate_recommendation(
+        latest_reading.get('temp', 0),
+        latest_reading.get('humidity', 0),
+        latest_reading.get('air_quality', 0)
+    )
+    
+    return jsonify({
+        **latest_reading,
+        **recommendation
+    })
+
+
 @app.route('/api/health')
 def health():
     """Health check endpoint"""
@@ -86,7 +76,7 @@ def calculate_recommendation(temp, humidity, air_quality):
 
     reasons = []
 
-    if air_quality < AQ_min:
+    if air_quality < AQ_MIN:
         reasons.append("Poor air quality")
     if temp > TEMP_MAX:
         reasons.append("Temperature too high")
@@ -111,5 +101,5 @@ if __name__ == '__main__':
     serial_thread = threading.Thread(target=read_serial_continuously, daemon=True)
     serial_thread.start()
 
-    print("Starting API server on http://localhost:5000")
-    app.run(debug=True, port=5000)
+    print("Starting API server on http://localhost:5001")
+    app.run(debug=True, port=5001)
