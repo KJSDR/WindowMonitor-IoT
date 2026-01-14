@@ -17,3 +17,6 @@ Steps.
 
 ## Demo
 Link to short screen recording.
+
+## ESP32 / Breadboard / Sensors / Wiring
+![alt text](esp32.jpg)
