@@ -4,7 +4,7 @@ import time
 from datetime import datatime
 from database import insert_reading
 
-SERIAL_PORT = 'dev/cu.usbserial-XXXX' #get my right port number
+SERIAL_PORT = '/dev/cu.usbserial-022AF20E' #get my right port number
 BAUD_RATE = 115200
 
 def read_serial():
