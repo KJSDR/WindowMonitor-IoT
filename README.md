@@ -17,6 +17,3 @@ Steps.
 
 ## Demo
 Link to short screen recording.
-
-## Adafruit ESP32 Feather
-!(/Users/killiand/Desktop/Projets/MK1-WindowMonitor/adafruitesp32feather.jpg)
