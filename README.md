@@ -4,7 +4,7 @@
 Brief paragraph: what it does and why.
 
 ## Architecture
-ESP32 Sensors w/ logic → USB Serial (MQTT - future) → Flask Backend  → SQLite DB → React/Vite Dashboard.
+ESP32 → USB Serial (MQTT - future) → Flask Backend REST API  → SQLite DB → React/Vite Dashboard.
 
 ## Decision Logic
 Thresholds + stability window.
