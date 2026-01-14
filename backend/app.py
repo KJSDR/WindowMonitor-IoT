@@ -16,7 +16,7 @@ latest_reading = {
     "timespamp": 0
 }
 
-SERIAL_PORT = '/dev/cu.usbserial-XXXX' #dont forget o update this to correct name
+SERIAL_PORT = '/dev/cu.usbserial-XXXX' #update to corredct name
 BAUD_RATE = 115200
 
 def read_serial_continuously():
