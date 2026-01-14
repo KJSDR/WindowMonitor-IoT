@@ -19,4 +19,4 @@ Steps.
 Link to short screen recording.
 
 ## ESP32 / Breadboard / Sensors / Wiring
-<img src="esp32.jpg" alt="ESP32 wiring" height="500" width="300">
+<img src="esp32.jpg" alt="ESP32 wiring" height="700" width="400">
