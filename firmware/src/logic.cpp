@@ -11,13 +11,13 @@ bool shouldCloseWindow(float temp, float humidity, int airQuality) {
 }
 
 void printRecommendation(bool alert) {
-  Serial.print("💡 RECOMMENDATION: ");
+  Serial.print("RECOMMENDATION: ");
   
   if (alert) {
-    Serial.println("⚠️  CLOSE WINDOW");
+    Serial.println("CLOSE WINDOW");
     Serial.println("   Environmental conditions not optimal\n");
   } else {
-    Serial.println("✅ WINDOW CAN STAY OPEN");
+    Serial.println("WINDOW CAN STAY OPEN");
     Serial.println("   All conditions acceptable\n");
   }
 }

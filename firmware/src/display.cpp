@@ -24,15 +24,15 @@ void printHeader() {
 void printReadings(float temp, float humidity, int airQuality) {
   Serial.println("══════════════ READINGS ══════════════");
   
-  Serial.print("🌡️  Temperature: ");
+  Serial.print("Temperature: ");
   Serial.print(temp, 1);
   Serial.println("°F");
   
-  Serial.print("💧 Humidity:    ");
+  Serial.print("Humidity:    ");
   Serial.print(humidity, 1);
   Serial.println("%");
   
-  Serial.print("💨 Air Quality: ");
+  Serial.print("Air Quality: ");
   Serial.println(airQuality);
   
   Serial.println("═════════════════════════════════════\n");
