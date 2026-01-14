@@ -48,11 +48,5 @@ def read_serial():
         ser.close()
 
 
-
-
-
-
-
-
 if __name__ == "__main__":
     read_serial()
