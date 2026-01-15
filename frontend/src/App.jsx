@@ -68,16 +68,60 @@ function App() {
         }
 
         if (newHistory.temp.length > MAX_DATA_POINTS) {
-          newHistory.temp = newHistory
-          newHistory.
-          newHistory.
-          newHistory.
+          newHistory.temp = newHistory.temp.slice(-MAX_DATA_POINTS)
+          newHistory.humidity = newHistory.humidity.slice(-MAX_DATA_POINTS)
+          newHistory.air_quality = newHistory.air_quality.slice(-MAX_DATA_POINTS)
+          newHistory.timestamps = newHistory.timestamps.slice(-MAX_DATA_POINTS)
         }
+        return newHistory
       })
+    } catch (error) {
+      console.error('Failed to fetch:, error')
     }
   }
 
   const isOpen = data.recommendation === 'OPEN'
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRation: false,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        x: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          display: false
+        },
+        y: {
+          ticks: {
+            font: {
+              size: 10
+            }
+          }
+        }
+      },
+      elements: {
+        point: {
+          radius: 0
+        },
+        line: {
+          tension: 0.4
+        }
+      }
+    }
+  }
+const tempChartData = {
+  labels: history.timestamps,
+  datasets: [{
+    label: 'Temperature'
+  }]
+}
 
   return (
     <div className="container">
