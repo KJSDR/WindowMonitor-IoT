@@ -1,4 +1,15 @@
 import { useState, useEffect } from 'react'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js'
+import { Line } from 'react-chartjs-2'
 import './App.css'
 
 const API_URL = 'http://127.0.0.1:5001/api/latest'
