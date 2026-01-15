@@ -12,7 +12,18 @@ import {
 import { Line } from 'react-chartjs-2'
 import './App.css'
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
+
 const API_URL = 'http://127.0.0.1:5001/api/latest'
+const MAX_DATA_POINTS = 30
 
 function App() {
   const [data, setData] = useState({
@@ -23,6 +34,13 @@ function App() {
     reason: 'Connecting to sensors...'
   })
   const [lastUpdate, setLastUpdate] = useState(null)
+
+  const [history, setHistory] = useState({
+    temp: [],
+    humidity: [],
+    air_quality: [],
+    timestamps: []
+  })
 
   useEffect(() => {
     fetchData()
@@ -37,9 +55,25 @@ function App() {
       const response = await fetch(API_URL)
       const json = await response.json()
       setData(json)
-      setLastUpdate(new Date())
-    } catch (error) {
-      console.error('Failed to fetch:', error)
+
+      const now = new Date()
+      setLastUpdate(now)
+
+      setHistory(prev => {
+        const newHistory = {
+          temp: [...prev.temp, json.temp],
+          humidity: [...prev.humidity, json.humidity],
+          air_quality: [...prev.air_quality, json.air_quality],
+          timestamps: [...prev.timestamps, now.toLocaleTimeString()]
+        }
+
+        if (newHistory.temp.length > MAX_DATA_POINTS) {
+          newHistory.temp = newHistory
+          newHistory.
+          newHistory.
+          newHistory.
+        }
+      })
     }
   }
 
