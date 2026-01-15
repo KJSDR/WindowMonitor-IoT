@@ -119,7 +119,36 @@ function App() {
 const tempChartData = {
   labels: history.timestamps,
   datasets: [{
-    label: 'Temperature'
+    label: 'Temperature',
+    data: history.temp,
+    borderColor: '#ef4444',
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    borderWdith: 2,
+    fill: true
+  }]
+}
+
+const humidityChartData = {
+  labels: history.timestamps,
+  datasets: [{
+    label: 'Humidity',
+    data: history.humidity,
+    borderColor: '#ef4444',
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    borderWdith: 2,
+    fill: true
+  }]
+}
+
+const airQualityChartData = {
+  labels: history.timestamps,
+  datasets: [{
+    label: 'Air Quality',
+    data: history.air_quality,
+    borderColor: '#ef4444',
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    borderWdith: 2,
+    fill: true
   }]
 }
 
@@ -134,16 +163,25 @@ const tempChartData = {
         <div className="sensor-card">
           <div className="sensor-value">{data.temp.toFixed(1)}°F</div>
           <div className="sensor-label">Temperature</div>
+          <div className="chart-container">
+            <Line data={tempChartData} options={chartOptions} />
+          </div>
         </div>
 
         <div className="sensor-card">
           <div className="sensor-value">{data.humidity.toFixed(1)}%</div>
           <div className="sensor-label">Humidity</div>
+          <div className="chart-container">
+            <Line data={humidityChartData} options={chartOptions} />
+          </div>
         </div>
 
         <div className="sensor-card">
           <div className="sensor-value">{data.air_quality}</div>
           <div className="sensor-label">Air Quality</div>
+          <div className="chart-container">
+            <Line data={airQualityChartData} options={chartOptions} />
+          </div>
         </div>
       </div>
 

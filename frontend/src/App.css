@@ -39,8 +39,8 @@ h1 {
 }
 
 .sensor-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -122,4 +122,16 @@ h1 {
     align-items: flex-start;
     gap: 8px;
   }
+}
+
+.chart-container {
+  height: 150px;
+  margin-top: 16px;
+}
+
+.sensor-card {
+  border: 1px solid #e5e5e5;
+  border-radius:6px;
+  padding: 16px;
+  background: #fafafa;
 }
