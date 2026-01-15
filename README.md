@@ -25,20 +25,20 @@ Link to short screen recording
 ## Build notes
 
 ### Completed (Scope for intensive)
-ESP32 firmware reading 2 sensors (3 readings)
-Python Flask REST API
-Real-time React/Vite dashboard
-Live sensor values
-3 live-updating graphs
-OPEN/CLOSE recommendation logic
-UI
+- ESP32 firmware reading 2 sensors (3 readings)
+- Python Flask REST API
+- Real-time React/Vite dashboard
+- Live sensor values
+- 3 live-updating graphs
+- OPEN/CLOSE recommendation logic
+- UI
 
 ### To do
-Add SQLite DB
-Trend arrows (rising/falling indicators)
-Rolling averages (5min-30min)
-Better threshold logic (hystersis and stability windows)
-Export data feature
-Dark mode toggle
-Related health tips?
-Weather API connection for better predictions / recommendations
+- Add SQLite DB
+- Trend arrows (rising/falling indicators)
+- Rolling averages (5min-30min)
+- Better threshold logic (hystersis and stability windows)
+- Export data feature
+- Dark mode toggle
+- Related health tips?
+- Weather API connection for better predictions / recommendations
