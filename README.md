@@ -49,12 +49,35 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 - OPEN/CLOSE recommendation logic
 - UI
 
-### To do
-- Add SQLite DB
-- Trend arrows (rising/falling indicators)
-- Rolling averages (5min-30min)
-- Better threshold logic (hysteresis and stability windows)
-- Export data feature
-- Dark mode toggle
-- Related health tips?
-- Weather API connection for better predictions / recommendations
+## To Do
+
+### Phase 2: Core Systems (Priority for Green Energy)
+- [ ] SQLite database with time-series optimizations
+- [ ] Data validation & anomaly detection
+- [ ] Sensor health monitoring
+- [ ] Historical data page with time-range filters
+- [ ] Data quality metrics dashboard
+- [ ] Structured logging (JSON format)
+- [ ] Unit tests for decision logic
+
+### Phase 3: Industrial Systems Features
+- [ ] Alert rules engine (configurable thresholds)
+- [ ] Alert history & management
+- [ ] Multi-level data aggregations (1min → hourly → daily)
+- [ ] Background workers (APScheduler)
+- [ ] Data retention & downsampling policy
+- [ ] System diagnostics dashboard
+- [ ] API rate limiting
+
+### Phase 4: Advanced
+- [ ] FastAPI migration (better performance)
+- [ ] Simulation mode (mock sensor data)
+- [ ] Metrics endpoint (Prometheus format)
+- [ ] Docker setup
+- [ ] API documentation (OpenAPI)
+
+### Nice-to-Have
+- [ ] Trend arrows & rolling averages
+- [ ] Dark mode
+- [ ] Weather API integration
+- [ ] Export data (CSV/JSON)
