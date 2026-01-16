@@ -2,6 +2,12 @@
 #include "config.h"
 #include "sensors.h"
 
+/*
+*envionmental monitoring firmware
+*reads DHT22 abd MQ135 sensors
+*outputs JSON via serial every 3s
+*/
+
 unsigned long lastReading = 0;
 
 void setup() {
