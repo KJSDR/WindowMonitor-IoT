@@ -36,6 +36,7 @@ function App() {
     reason: 'Connecting to sensors...'
   })
   const [lastUpdate, setLastUpdate] = useState(null)
+  const [error, setError] = useState(null)
 
   //history data of the graphs (arrays of past readings)
   const [history, setHistory] = useState({
@@ -58,6 +59,7 @@ function App() {
       const response = await fetch(API_URL)
       const json = await response.json()
       setData(json)
+      setError(null)
 
       const now = new Date()
       setLastUpdate(now)
@@ -80,6 +82,7 @@ function App() {
       })
     } catch (error) {
       console.error('Failed to fetch:', error)
+      setError('Unable to connect to sensor API')
     }
   }
 
@@ -163,6 +166,11 @@ const airQualityChartData = {
         <p className="subtitle">Environmental Monitoring System</p>
       </header>
       {/* sensor cards for live values and graphs*/}
+      {error && (
+        <div className="error-banner">
+          {error} Check if backend is running on port 5001
+          </div>
+      )}
       <div className="sensor-grid">
         <div className="sensor-card">
           <div className="sensor-value">{data.temp.toFixed(1)}°F</div>
