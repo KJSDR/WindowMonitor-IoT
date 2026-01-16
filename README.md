@@ -51,37 +51,29 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 
 ### To Do
 
-### To Do
+#### Core Features (Priority):
+- [ ] SQLite database
+- [ ] Historical data page (/history) with date filters
+- [ ] Analytics page with basic stats
+- [ ] Better decision logic:
+    - [ ] Hysteresis (prevent flip-flopping)
+    - [ ] Trend arrows (rising/falling)
+    - [ ] Rolling averages (5min, 30min)
+- [ ] More REST endpoints:
+    - [ ] /api/readings?start=X&end=Y
+    - [ ] /api/stats
+    - [ ] /api/export
+- [ ] Unit tests (pytest) for decision logic
+- [ ] Export data (CSV)
 
-- Add SQLite DB
-- Historical Data / Analytics Page:
-    - /dashboard - current live view
-    - /history - filterable historical data table
-    - /analytics - aggregated statistics
-- Trend arrows (rising/falling indicators)
-- Rolling averages (5min-30min)
-- Better threshold logic (hysteresis and stability windows)
-- Export data feature
-- Dark mode toggle
-- Related health tips?
-- Weather API connection for better predictions / recommendations
-- More REST endpoints beyond /api/latest
-    - FastAPI
-    - Proper HTTP status codes
-    - Rate limiting
+#### Polish (If Time):
+- [ ] Weather API integration
+- [ ] Data validation (detect bad sensor readings)
+- [ ] Docker setup
+- [ ] Dark mode
+- [ ] Demo video (2-3 min)
 
-#### Additional for Green Energy/Industrial Systems:
-- Data validation & anomaly detection (detect sensor failures, stuck readings)
-- Sensor health monitoring & connectivity status
-- Multi-level data aggregations (1min → hourly → daily rollups)
-- Background workers for automated processing (APScheduler)
-- Data retention & downsampling policy
-- Alert rules engine (configurable thresholds)
-- Alert history & management
-- System diagnostics dashboard (API response times, error rates)
-- Structured logging (JSON format with log levels)
-- Simulation mode (mock sensor data for testing)
-- Metrics endpoint (Prometheus format)
-- Docker + Docker Compose setup
-- OpenAPI documentation
-- Unit tests (pytest) for decision logic
+#### Maybe Later:
+- [ ] Alert system
+- [ ] System diagnostics
+- [ ] FastAPI migration
