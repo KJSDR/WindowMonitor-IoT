@@ -3,15 +3,15 @@
 #include "sensors.h"
 #include "config.h"
 
-// Create DHT sensor object
+// create DHT sensor object
 DHT dht(DHTPIN, DHTTYPE);
 
 void initSensors() {
-  // Initialize DHT22
+  // init DHT22
   pinMode(DHTPIN, INPUT_PULLUP);
   dht.begin();
   
-  // Initialize MQ-135
+  // init MQ-135
   pinMode(MQ135_PIN, INPUT);
   
   Serial.println("✓ Sensors initialized");

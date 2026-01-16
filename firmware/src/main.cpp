@@ -20,24 +20,24 @@ void setup() {
 }
 
 void loop() {
-  // Read every 3 seconds
+  // read every 3s
   if (millis() - lastReading < 3000) {
     return;
   }
   lastReading = millis();
   
-  // Read sensors
+  // read sensors
   float temp = readTemperature();
   float humidity = readHumidity();
   int airQuality = readAirQuality();
   
-  // Check validity
+  // check their validity
   if (isnan(temp) || isnan(humidity)) {
     Serial.println("{\"error\":\"Sensor read failed\"}");
     return;
   }
   
-  // Output JSON
+  // outputs in JSON format
   Serial.print("{");
   Serial.print("\"temp\":");
   Serial.print(temp, 1);
