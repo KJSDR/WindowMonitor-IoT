@@ -79,7 +79,7 @@ function App() {
         return newHistory
       })
     } catch (error) {
-      console.error('Failed to fetch:, error')
+      console.error('Failed to fetch:', error)
     }
   }
 
@@ -137,8 +137,8 @@ const humidityChartData = {
   datasets: [{
     label: 'Humidity',
     data: history.humidity,
-    borderColor: '#ef4444',
-    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    borderColor: '#3b82f6',
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
     borderWdith: 2,
     fill: true
   }]
@@ -149,8 +149,8 @@ const airQualityChartData = {
   datasets: [{
     label: 'Air Quality',
     data: history.air_quality,
-    borderColor: '#ef4444',
-    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    borderColor: '#10b981',
+    backgroundColor: 'rgba(16, 185, 129, 0.1)',
     borderWdith: 2,
     fill: true
   }]
