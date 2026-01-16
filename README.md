@@ -1,23 +1,39 @@
 # MK.1 – Environmental Monitoring & Decision System
 
 ## Overview
-Brief paragraph: what it does and why
+Monitors temperature, humidity, and air quality to recommend when to open or close your window. Built to explore full-stack IoT architecture - from embedded firmware to web dashboard.
+
+## Tech Stack
+- **Firmware:** Embedded C++ on ESP32 (PlatformIO)
+- **Backend:** Python Flask REST API with multi-threading
+- **Frontend:** React/Vite + Chart.js
+- **Hardware:** DHT22 (temp/humidity), MQ-135 (air quality)
 
 ## Architecture
 ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Dashboard
 
-## Decision Logic
-Thresholds + stability window
+## Features
+- Real-time sensor readings (2s intervals)
+- Live trend graphs (60s of data)
+- Threshold-based OPEN/CLOSE recommendations
+- Error handling and reconnection logic
 
-## Dashboard
-Screenshots + explanation
+## Decision Logic
+**Thresholds:**
+- Temperature: 60-78°F
+- Humidity: < 70%
+- Air Quality: > 500
+
+- If any threshold violated -> **CLOSE**
+- All favorable -> **OPEN**
+
+**Stability Window:**
+- To do
 
 ## How to Run Locally
-backend - python3 app.py
-frontend - npm run dev
-
-## Demo
-Link to short screen recording
+- backend: cd backend -> pip3 install -r requirements.txt -> python3 app.py
+- frontend: cd frontend -> npm install -> npm run dev
+- firmware: upload via PlatformIO to ESP32
 
 ## ESP32 / Breadboard / Sensors / Wiring
 <img src="esp32.jpg" alt="ESP32 wiring" height="700" width="400">
@@ -37,7 +53,7 @@ Link to short screen recording
 - Add SQLite DB
 - Trend arrows (rising/falling indicators)
 - Rolling averages (5min-30min)
-- Better threshold logic (hystersis and stability windows)
+- Better threshold logic (hysteresis and stability windows)
 - Export data feature
 - Dark mode toggle
 - Related health tips?
