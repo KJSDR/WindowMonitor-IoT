@@ -6,9 +6,9 @@ import threading
 import time
 
 app = Flask(__name__)
-CORS(app)
+CORS(app) # Enable CORS for the react frontend (allows requests from one domain to another)
 
-
+# tores most recent sensor reading in the memory
 latest_reading = {
     "temp": 0,
     "humidity": 0,
@@ -16,8 +16,9 @@ latest_reading = {
     "timestamp": 0
 }
 
-SERIAL_PORT = '/dev/cu.usbserial-022AF20E' #update to corredct name
-BAUD_RATE = 115200
+#serial port config
+SERIAL_PORT = '/dev/cu.usbserial-022AF20E' #update to whatever local port is
+BAUD_RATE = 115200 #how fast the data is transmitted, this is a standard number (115200 bits per sec)
 
 def read_serial_continuously():
     """Background thread that reads serial data"""
@@ -28,10 +29,12 @@ def read_serial_continuously():
         print(f"Connected to {SERIAL_PORT}")
 
         while True:
+            #checks if data is available from serial port
             if ser.in_waiting > 0:
                 line = ser.readline().decode('utf-8').strip()
 
                 try:
+                    #parses the json from esp32
                     data = json.loads(line)
                     latest_reading = data
                     print(f"Updated: Temp={data['temp']}°F, Humidity={data['humidity']}%, AQ={data['air_quality']}")
@@ -49,12 +52,14 @@ def read_serial_continuously():
 def get_latest():
     """Return the most recent sensor reading"""
     
+    #calculate recommendation based on the current readings
     recommendation = calculate_recommendation(
         latest_reading.get('temp', 0),
         latest_reading.get('humidity', 0),
         latest_reading.get('air_quality', 0)
     )
     
+    #merges sensor data with recommendations
     return jsonify({
         **latest_reading,
         **recommendation
@@ -69,6 +74,7 @@ def health():
 def calculate_recommendation(temp, humidity, air_quality):
     """Simple decision logic"""
 
+    #defines the environmental thesholds (can change to whatever)
     TEMP_MIN = 60
     TEMP_MAX = 78
     HUMIDITY_MAX = 70
@@ -76,6 +82,7 @@ def calculate_recommendation(temp, humidity, air_quality):
 
     reasons = []
 
+    #checks each condition and collects reasons for the alerts
     if air_quality < AQ_MIN:
         reasons.append("Poor air quality")
     if temp > TEMP_MAX:
@@ -85,6 +92,7 @@ def calculate_recommendation(temp, humidity, air_quality):
     if humidity > HUMIDITY_MAX:
         reasons.append("Humidity too high")
 
+    #returns the recommendation based on if any alerts came up
     if reasons:
         return {
             "recommendation": "CLOSE",
@@ -98,8 +106,9 @@ def calculate_recommendation(temp, humidity, air_quality):
 
 if __name__ == '__main__':
 
+    #starts serial readings in background thread, daemon True makes it exit with main program?
     serial_thread = threading.Thread(target=read_serial_continuously, daemon=True)
     serial_thread.start()
 
-    print("Starting API server on http://localhost:5001")
+    print("Starting API server on http://localhost:5001") #5001 because mac often uses 5000 for other stuff and breaks
     app.run(debug=True, port=5001)
