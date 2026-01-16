@@ -5,6 +5,13 @@ import json
 import threading
 import time
 
+"""
+Environmental monitoring REST API
+
+Reads realtime sensor data from DHT22 and MQ135 connected to a ESP3 via serial connection and 
+makes JSON endpoints for it to connect to a dashboard.
+"""
+
 app = Flask(__name__)
 CORS(app) # Enable CORS for the react frontend (allows requests from one domain to another)
 
@@ -45,6 +52,10 @@ def read_serial_continuously():
 
     except Exception as e:
         print(f"Serial error: {e}")
+        print("Attempting to reconnect in 5 seconds...")
+        time.sleep(5)
+        #retries connection
+        read_serial_continuously()
 
 
 
@@ -58,7 +69,12 @@ def get_latest():
         latest_reading.get('humidity', 0),
         latest_reading.get('air_quality', 0)
     )
-    
+    #validate sensor reading to make sure they are within reasonable range
+    if not (0 <= latest_reading.get('temp', 0) <= 150):
+        latest_reading['temp'] = 0
+    if not (0 <= latest_reading.get('humidity', 0) <= 100):
+        latest_reading['humidity'] = 0
+
     #merges sensor data with recommendations
     return jsonify({
         **latest_reading,
