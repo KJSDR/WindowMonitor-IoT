@@ -12,6 +12,7 @@ import {
 import { Line } from 'react-chartjs-2'
 import './App.css'
 
+//register chartsjs components, this is the stuff it uses
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,10 +23,11 @@ ChartJS.register(
   Legend
 )
 
-const API_URL = 'http://127.0.0.1:5001/api/latest'
-const MAX_DATA_POINTS = 30
+const API_URL = 'http://127.0.0.1:5001/api/latest' //imports from this link from our flask rest api backend
+const MAX_DATA_POINTS = 30 //keeps last 30 readings (ends up being 60 secs at 2s intervals)
 
 function App() {
+  //current sensor readings and recommendation
   const [data, setData] = useState({
     temp: 0,
     humidity: 0,
@@ -35,19 +37,20 @@ function App() {
   })
   const [lastUpdate, setLastUpdate] = useState(null)
 
+  //history data of the graphs (arrays of past readings)
   const [history, setHistory] = useState({
     temp: [],
     humidity: [],
     air_quality: [],
     timestamps: []
   })
-
+  //fetches data on the component mount every 2s
   useEffect(() => {
     fetchData()
 
     const interval = setInterval(fetchData, 2000)
 
-    return () => clearInterval(interval)
+    return () => clearInterval(interval) //cleans up on unmount
   }, [])
 
   const fetchData = async () => {
@@ -58,7 +61,7 @@ function App() {
 
       const now = new Date()
       setLastUpdate(now)
-
+      //adds new readings to the history
       setHistory(prev => {
         const newHistory = {
           temp: [...prev.temp, json.temp],
@@ -66,7 +69,7 @@ function App() {
           air_quality: [...prev.air_quality, json.air_quality],
           timestamps: [...prev.timestamps, now.toLocaleTimeString()]
         }
-
+        //keeps on the last max data points cause it prevents memory issues
         if (newHistory.temp.length > MAX_DATA_POINTS) {
           newHistory.temp = newHistory.temp.slice(-MAX_DATA_POINTS)
           newHistory.humidity = newHistory.humidity.slice(-MAX_DATA_POINTS)
@@ -81,41 +84,42 @@ function App() {
   }
 
   const isOpen = data.recommendation === 'OPEN'
-
+  //chartjs config, easy and simple
   const chartOptions = {
     responsive: true,
-    maintainAspectRation: false,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false
       },
       tooltip: {
-        x: {
-          display: false
-        }
+        mode: 'index',
+        intersect: false
+      }
+    },
+    scales: { 
+      x: {
+        display: false
       },
-      scales: {
-        x: {
-          display: false
-        },
-        y: {
-          ticks: {
-            font: {
-              size: 10
-            }
+      y: {
+        ticks: {
+          font: {
+            size: 10
           }
         }
+      }
+    },
+    elements: { 
+      point: {
+        radius: 0
       },
-      elements: {
-        point: {
-          radius: 0
-        },
-        line: {
-          tension: 0.4
-        }
+      line: {
+        tension: 0.4 //smooth curve
       }
     }
   }
+
+//temp chart data config
 const tempChartData = {
   labels: history.timestamps,
   datasets: [{
@@ -127,7 +131,7 @@ const tempChartData = {
     fill: true
   }]
 }
-
+//humidity chart data config
 const humidityChartData = {
   labels: history.timestamps,
   datasets: [{
@@ -139,7 +143,7 @@ const humidityChartData = {
     fill: true
   }]
 }
-
+//aq chart data config
 const airQualityChartData = {
   labels: history.timestamps,
   datasets: [{
@@ -158,7 +162,7 @@ const airQualityChartData = {
         <h1>Window Monitor</h1>
         <p className="subtitle">Environmental Monitoring System</p>
       </header>
-
+      {/* sensor cards for live values and graphs*/}
       <div className="sensor-grid">
         <div className="sensor-card">
           <div className="sensor-value">{data.temp.toFixed(1)}°F</div>
@@ -184,7 +188,7 @@ const airQualityChartData = {
           </div>
         </div>
       </div>
-
+      {/* window recs based on threshold logic */}
       <div className={`recommendation ${isOpen ? 'open' : 'close'}`}>
         <div className="rec-status">
           {isOpen ? '🟢 WINDOW OPEN' : '🔴 CLOSE WINDOW'}
