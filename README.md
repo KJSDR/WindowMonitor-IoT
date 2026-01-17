@@ -52,8 +52,8 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 ### To Do
 
 #### Core Features (Priority):
-- [ ] SQLite database
-- [ ] Historical data page (/history) with date filters
+- [x] SQLite database
+- [x] Historical data page (/history) with date filters
 - [ ] Analytics page with basic stats
 - [ ] Better decision logic:
     - [ ] Hysteresis (prevent flip-flopping)
