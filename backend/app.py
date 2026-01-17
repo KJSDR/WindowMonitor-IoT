@@ -1,10 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import serial
 import json
 import threading
 import time
-import database import insert_reading, get_recent_readings
+from database import insert_reading, get_recent_readings
 
 """
 Environmental monitoring REST API
@@ -122,13 +122,20 @@ def calculate_recommendation(temp, humidity, air_quality):
             "reason": "All conditions favorable"
         }
 
-@app.route('api/readings')
+@app.route('/api/readings')
 def get_readings():
     """Return history sensor readings from the database"""
+    #gets limit from query parameter, defaults 100 and max 1000
 
-    from flask import request
-    limit = 
-    limit = #limit here
+    limit = request.args.get('limit', default=100, type=int)
+    limit = min(limit, 1000) #caps at 1000 to prevent giant responses
+
+    readings = get_recent_readings(limit)
+
+    return jsonify({
+        'count': len(readings),
+        'readings': readings
+    })
 
 if __name__ == '__main__':
 
