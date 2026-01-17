@@ -4,6 +4,7 @@ import serial
 import json
 import threading
 import time
+import database import insert_reading, get_recent_readings
 
 """
 Environmental monitoring REST API
@@ -45,6 +46,7 @@ def read_serial_continuously():
                     data = json.loads(line)
                     latest_reading = data
                     print(f"Updated: Temp={data['temp']}°F, Humidity={data['humidity']}%, AQ={data['air_quality']}")
+                    insert_reading(data) #stores reading in db
                 except json.JSONDecodeError:
                     pass
 
@@ -119,6 +121,14 @@ def calculate_recommendation(temp, humidity, air_quality):
             "recommendation": "OPEN",
             "reason": "All conditions favorable"
         }
+
+@app.route('api/readings')
+def get_readings():
+    """Return history sensor readings from the database"""
+
+    from flask import request
+    limit = 
+    limit = #limit here
 
 if __name__ == '__main__':
 
