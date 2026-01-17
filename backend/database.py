@@ -20,9 +20,14 @@ def init_db():
         )
     ''')
 
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_timestamp
+        ON readings(timestamp)    
+    ''')
+
     conn.commit()
     conn.close()
-    print("Database intialized")
+    print("Database initialized")
 
 def insert_reading(data):
     '''Insert sensor reading into database'''
@@ -64,7 +69,7 @@ def get_recent_readings(limit=100):
             'humidity': row[2],
             'air_quality': row[3]
         }
-        for rows in rows
+        for row in rows
     ]
 
 init_db()
