@@ -147,6 +147,42 @@ def get_stats():
 
     readings = get_recent_reading(limit)
 
+    if not readings:
+        return jsonify({
+            'error': 'No data available'
+        })
+
+    #extract values
+    temps = [r['temperature'] for r in readings]
+    humdidities = [r['humidity'] for r in readings]
+    aqs = [r['air_quality'] for r in readings]
+
+    #calc stats
+    stats = {
+        'count': len(readings),
+        'temperature': {
+            'min': min(temps),
+            'max': max(temps),
+            'avg': sum(temps) / len(temps)
+        },
+        'humidity': {
+            'min': min(humidities),
+            'max': max(humidities),
+            'avg': sum(humidities) / len(humidities)
+        },
+        'air_quality': {
+            'min': min(aqs),
+            'max': max(aqs),
+            'avg': sum(aqs) / len(aqs)
+        },
+        'time_range': {
+            'start': readings[-1]['timestamp'],
+            'end': readings[0]['timestamp']
+        },
+    }
+
+    return jsonift(stats)
+
 if __name__ == '__main__':
 
     #starts serial readings in background thread, daemon True makes it exit with main program?
