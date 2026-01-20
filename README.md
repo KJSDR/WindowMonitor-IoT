@@ -51,7 +51,7 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 
 ### To Do
 
-#### Core Features (Priority):
+#### Core Features:
 - [x] SQLite database
 - [x] Historical data page (/history) with date filters
 - [ ] Analytics page with basic stats
@@ -66,10 +66,9 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 - [ ] Unit tests (pytest) for decision logic
 - [ ] Export data (CSV)
 
-#### Polish (If Time):
+#### Polish:
 - [ ] Weather API integration
 - [ ] Data validation (detect bad sensor readings)
-- [ ] Docker setup
 - [ ] Dark mode
 - [ ] Demo video (2-3 min)
 

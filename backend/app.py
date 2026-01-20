@@ -137,6 +137,16 @@ def get_readings():
         'readings': readings
     })
 
+@app.route('/api/stats')
+def get_stats():
+    """Return stats summary of sensor data"""
+
+    #get limit from query paramter (lastt 100 readings)
+    limit = request.args.get('limit', defaul=100, type=int)
+    limit = min(limit, 1000)
+
+    readings = get_recent_reading(limit)
+
 if __name__ == '__main__':
 
     #starts serial readings in background thread, daemon True makes it exit with main program?
