@@ -162,9 +162,15 @@ const airQualityChartData = {
   return (
     <div className="container">
       <header>
+
         <h1>Window Monitor</h1>
         <p className="subtitle">Environmental Monitoring System</p>
       </header>
+
+      <div className="nav-link">
+        <a href="/history">View History</a>
+      </div>
+
       {/* sensor cards for live values and graphs*/}
       {error && (
         <div className="error-banner">
