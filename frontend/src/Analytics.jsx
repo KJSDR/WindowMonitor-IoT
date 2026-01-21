@@ -35,4 +35,27 @@ function Analytics() {
         fetchData()
     }, [limit])
 
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            //fetch stats and readings
+            const [statsRes, readingsRes] = await Promise.all([
+                fetch(`${STATS_API}?limit=${limit}`),
+                fetch(`${READINGS_API}?limit=${limit}`),
+            ])
+
+            const statsData = await statsRes.json()
+            const readingsData = await readingsRes.json()
+
+            setStats(statsData)
+            setReadings(readingsData.readings || [])
+        }   catch (error) {
+            console.error('Failed to fetch analytics:', error)
+        }
+        setLoading(false)
+    }
+
+    //prepares chart data (oldest first)
+    const
+
 }
