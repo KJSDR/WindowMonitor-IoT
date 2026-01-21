@@ -56,6 +56,51 @@ function Analytics() {
     }
 
     //prepares chart data (oldest first)
-    const
+    const chartData = readings.slice().reverse()
+
+    const timestamps = chartData.map(r => {
+        const date = new Date(r.timestamp)
+        return date.toLocaleTimeString()
+    })
+
+    const chartOptions = {
+        responsive: true;
+        maintainAspectRation: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    maxticketsLimit: 10,
+                    font: { size: 10 }
+                }
+            },
+            y: {
+                ticks: {
+                    maxTicketsLimit: 10,
+                    font: { size: 10 }
+                }
+            }
+        },
+        elements: {
+            point: {
+                radius: 2
+            },
+            line: {
+                tension: 0.4
+            }
+        }
+    }
+
+    const humidityChartData = {
+        labels: timestamps:
+    }
 
 }
