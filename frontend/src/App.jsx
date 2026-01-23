@@ -168,7 +168,7 @@ const airQualityChartData = {
       </header>
 
       <div className="nav-link">
-        <a href="/history">View History</a>
+        <a href="/analytics">Analytics</a> | <a href="/history">View History</a>
       </div>
 
       {/* sensor cards for live values and graphs*/}
