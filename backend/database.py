@@ -17,6 +17,7 @@ def init_db():
             temperature REAL NOT NULL,
             humidity REAL NOT NULL,
             air_quality INTEGER NOT NULL,
+            is_valid INTEGER DEFAULT 1,
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         )
     ''')
@@ -25,6 +26,14 @@ def init_db():
         CREATE INDEX IF NOT EXISTS idx_timestamp
         ON readings(timestamp)    
     ''')
+
+    #add is_valid column in DB if it doesn't exist
+    try:
+        cursor.execute('ALTER TABLE readings ADD COLUMN is_valid INTEGER DEFAULT 1')
+        print("Added is_valid column to existing database")
+    except sqlite3.OperationalError:
+        #it already exist from new CREATE TABLE or prev migration
+        pass
 
     conn.commit()
     conn.close()
@@ -58,9 +67,10 @@ def get_recent_readings(limit=100):
     """Get most recent readings"""
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
+    
     #fetches latest readings and is ordered by insert time
     cursor.execute('''
-        SELECT timestamp, temperature, humidity, air_quality
+        SELECT timestamp, temperature, humidity, air_quality, is_valid
         FROM readings
         ORDER BY created_at DESC
         LIMIT ?
@@ -68,13 +78,15 @@ def get_recent_readings(limit=100):
 
     rows = cursor.fetchall()
     conn.close()
+    
     #converts rows to a dictionary format for easy access
     return [
         {
             'timestamp': row[0],
             'temperature': row[1],
             'humidity': row[2],
-            'air_quality': row[3]
+            'air_quality': row[3],
+            'is_valid': bool(row[4]) if len(row) > 4 else True
         }
         for row in rows
     ]

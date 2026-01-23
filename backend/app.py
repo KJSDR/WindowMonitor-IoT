@@ -169,6 +169,12 @@ def get_stats():
             'error': 'No data available'
         })
 
+    #filters out invalid readings for better calculated averages
+    valid_readings = [r for r in readings if r.get('is_valid', True)]
+
+    if not valid_readings:
+        return jsonify({'error': 'No valid data avaiable'})
+
     #extract values
     temps = [r['temperature'] for r in readings]
     humidities = [r['humidity'] for r in readings]
