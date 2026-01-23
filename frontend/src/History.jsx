@@ -69,13 +69,34 @@ function History() {
                             </thead>
                             <tbody>
                                 {readings.map((reading, index) => (
-                                    <tr key={index}>
+                                    <tr key={index} className={!reading.is_valid ? 'invalid-row' : ''}>
                                         <td>{formatDate(reading.timestamp)}</td>
-                                        <td>{reading.temperature.toFixed(1)}°F</td>
-                                        <td>{reading.humidity.toFixed(1)}%</td>
-                                        <td>{reading.air_quality}</td>
+                                        <td>
+                                            {reading.temperature.toFixed(1)}°F
+                                            {!reading.is_valid && (
+                                                <span className="warning-icon" title="Unreliable data - validation failed">
+                                                ⚠️
+                                                </span>
+                                            )}
+                                        </td>
+                                         <td>
+                                            {reading.humidity.toFixed(1)}%
+                                            {!reading.is_valid && (
+                                                <span className="warning-icon" title="Unreliable data - validation failed">
+                                                ⚠️
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td>
+                                            {reading.air_quality}
+                                            {!reading.is_valid && (
+                                                <span className="warning-icon" title="Unreliable data - validation failed">
+                                                ⚠️
+                                                </span>
+                                            )}
+                                        </td>
                                     </tr>
-                                ))}   
+                                ))}
                             </tbody>
                         </table>
                     </div>

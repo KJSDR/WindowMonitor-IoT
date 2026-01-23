@@ -94,3 +94,12 @@ tbody tr:hover {
     background: #fafafa;
 }
 
+.invalid-row {
+    background: #fef3c7;
+  }
+  
+  .warning-icon {
+    margin-left: 6px;
+    cursor: help;
+    font-size: 0.875rem;
+  }
