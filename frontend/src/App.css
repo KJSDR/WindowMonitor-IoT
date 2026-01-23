@@ -162,3 +162,29 @@ h1 {
 .nav-link a:hover {
   text-decoration: underline;
 }
+
+.health-badge {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.health-healthy {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.health-warning {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.health-initializing {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}

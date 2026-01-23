@@ -37,7 +37,8 @@ function App() {
   })
   const [lastUpdate, setLastUpdate] = useState(null)
   const [error, setError] = useState(null)
-
+  const [sensorHealth, setSensorHealth] = useState({ status: 'intializing', message: 'Starting up...'})
+  
   //history data of the graphs (arrays of past readings)
   const [history, setHistory] = useState({
     temp: [],
@@ -60,6 +61,11 @@ function App() {
       const json = await response.json()
       setData(json)
       setError(null)
+
+      //fetch sensor health
+      const healthResponse = await fetch('http://127.0.0.1:5001/api/sensor-health')
+      const healthData = await healthResponse.json()
+      setSensorHealth(healthData) //add this to state
 
       const now = new Date()
       setLastUpdate(now)
@@ -169,6 +175,13 @@ const airQualityChartData = {
 
       <div className="nav-link">
         <a href="/analytics">Analytics</a> | <a href="/history">View History</a>
+      </div>
+
+      <div className={`health-badge health-${sensorHealth.status}`}>
+        {sensorHealth.status === 'healthy' && '🟢'}
+        {sensorHealth.status === 'warning' && '🟡'}
+        {sensorHealth.status === 'initializing' && '⚪️'}
+        {' '}{sensorHealth.message}
       </div>
 
       {/* sensor cards for live values and graphs*/}
