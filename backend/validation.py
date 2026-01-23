@@ -66,6 +66,26 @@ def validate_reading(temp, humidity, air_quality):
         'health': health
     }
 
+def get_sensor_health():
+    """Return current sensor health summary"""
+    if len(recent_values['temp']) < 3:
+        return [
+            'status': 'initializing',
+            'message': 'Collection baseline data...'
+        ]
 
+    #checks for recent variations
+    temp_variation = max(recent_values['temp']) - min(recent_values['temp'])
+    humidity_variation = max(recent_values['humidity']) - min(recent_values['humidity'])
+
+    if temp_variation < 0.1 and humidity_variation < 0.1:
+        return {
+            'status': 'warning',
+            'message': 'Sensors may be stuck - no variation detected'
+        }
+    return {
+        'status': 'healthy',
+        'message': 'All sensors responding normally'
+    }
 
         
