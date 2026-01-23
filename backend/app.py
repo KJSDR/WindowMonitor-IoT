@@ -5,7 +5,7 @@ import json
 import threading
 import time
 from database import insert_reading, get_recent_readings
-from validation import validation_reading, get_sensor_health
+from validation import validate_reading, get_sensor_health
 
 """
 Environmental monitoring REST API

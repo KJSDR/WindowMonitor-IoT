@@ -19,6 +19,7 @@ def validate_reading(temp, humidity, air_quality):
     Returns:
         dict with 'valid', 'issues', and 'health' keys
     """
+    issues = []
 
     #check for out-of-range values
     if not (0 <= temp <= 150):
@@ -69,10 +70,10 @@ def validate_reading(temp, humidity, air_quality):
 def get_sensor_health():
     """Return current sensor health summary"""
     if len(recent_values['temp']) < 3:
-        return [
+        return {
             'status': 'initializing',
             'message': 'Collection baseline data...'
-        ]
+        }
 
     #checks for recent variations
     temp_variation = max(recent_values['temp']) - min(recent_values['temp'])
