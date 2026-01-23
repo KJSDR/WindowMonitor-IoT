@@ -37,7 +37,7 @@ function App() {
   })
   const [lastUpdate, setLastUpdate] = useState(null)
   const [error, setError] = useState(null)
-  const [sensorHealth, setSensorHealth] = useState({ status: 'intializing', message: 'Starting up...'})
+  const [sensorHealth, setSensorHealth] = useState({ status: 'intitializing', message: 'Starting up...'})
   
   //history data of the graphs (arrays of past readings)
   const [history, setHistory] = useState({
@@ -136,7 +136,7 @@ const tempChartData = {
     data: history.temp,
     borderColor: '#ef4444',
     backgroundColor: 'rgba(239, 68, 68, 0.1)',
-    borderWdith: 2,
+    borderWidth: 2,
     fill: true
   }]
 }
@@ -148,7 +148,7 @@ const humidityChartData = {
     data: history.humidity,
     borderColor: '#3b82f6',
     backgroundColor: 'rgba(59, 130, 246, 0.1)',
-    borderWdith: 2,
+    borderWidth: 2,
     fill: true
   }]
 }
@@ -160,7 +160,7 @@ const airQualityChartData = {
     data: history.air_quality,
     borderColor: '#10b981',
     backgroundColor: 'rgba(16, 185, 129, 0.1)',
-    borderWdith: 2,
+    borderWidth: 2,
     fill: true
   }]
 }
