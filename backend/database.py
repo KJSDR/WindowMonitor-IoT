@@ -34,15 +34,21 @@ def insert_reading(data):
     '''Insert sensor reading into database'''
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
+
+    #get validation status
+    validate = data.get('validation', {})
+    is_valid = validation.get('valid', True)
+
     #inserts new reading by using server_time if it is there, otherise it is current time
     cursor.execute('''
-        INSERT INTO readings (timestamp, temperature, humidity, air_quality)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO readings (timestamp, temperature, humidity, air_quality, is_valid)
+        VALUES (?, ?, ?, ?, ?)
     ''', (
         data.get('server_time', datetime.now().isoformat()),
         data.get('temp'),
         data.get('humidity'),
         data.get('air_quality')
+        is_valid
     ))
 
     conn.commit()
