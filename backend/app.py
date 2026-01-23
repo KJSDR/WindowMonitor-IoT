@@ -63,7 +63,7 @@ def read_serial_continuously():
                         print(f"Warning: {', '.join(validation['issues'])}")
                     #still store in database (even if invalid still want for analysis)
                     insert_reading(data)
-                    
+
                 except json.JSONDecodeError:
                     pass
 
@@ -199,6 +199,13 @@ def get_stats():
     }
 
     return jsonify(stats)
+
+@app.route('/api/sensor-health')
+def sensor_health():
+    """Return current sensor health status"""
+    health = get_sensor_health()
+
+    return jsonify(health)
 
 if __name__ == '__main__':
 
