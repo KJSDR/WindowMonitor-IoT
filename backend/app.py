@@ -90,12 +90,6 @@ def get_latest():
         latest_reading.get('humidity', 0),
         latest_reading.get('air_quality', 0)
     )
-    #validate sensor reading to make sure they are within reasonable range
-    if not (0 <= latest_reading.get('temp', 0) <= 150):
-        latest_reading['temp'] = 0
-    if not (0 <= latest_reading.get('humidity', 0) <= 100):
-        latest_reading['humidity'] = 0
-
     #merges sensor data with recommendations
     return jsonify({
         **latest_reading,
@@ -175,7 +169,7 @@ def get_stats():
     valid_readings = [r for r in readings if r.get('is_valid', True)]
 
     if not valid_readings:
-        return jsonify({'error': 'No valid data avaiable'})
+        return jsonify({'error': 'No valid data available'})
 
     #extract values
     temps = [r['temperature'] for r in valid_readings]
@@ -184,7 +178,7 @@ def get_stats():
 
     #calc stats
     stats = {
-        'count': len(readings),
+        'count': len(valid_readings),
         'temperature': {
             'min': min(temps),
             'max': max(temps),
