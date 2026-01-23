@@ -99,8 +99,52 @@ function Analytics() {
         }
     }
 
-    const humidityChartData = {
-        labels: timestamps:
+    const TempChartData = {
+        labels: timestamps,
+        datasets: [{
+            label: 'Temperature',
+            data: chartData.map(r => r.temperature),
+            borderColor: '#ef4444',
+            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+            borderWidth: 2,
+            fill: true
+        }]
     }
+
+    const humidityChartData = {
+        labels: timestamps,
+        datasets: [{
+            label: 'Humidity',
+            data: chartData.map(r => r.humidity),
+            borderColor: '#3b82f6',
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            borderWidth: 2,
+            fill: true
+        }]
+    }
+
+    const airQualityChartData = {
+        labels: timestamps,
+        datasets: [{
+            label: 'Air Quality',
+            data: chartData.map(r => r.air_quality),
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            borderWidth: 2,
+            fill: true
+        }]
+    }
+
+    if (loading) {
+        return (
+            <div className="container">
+                <div className="loading">Loading analytics...</div>
+            </div>
+        )
+    }
+    
+    
+    
+
 
 }
