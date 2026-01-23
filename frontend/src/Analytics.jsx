@@ -65,7 +65,7 @@ function Analytics() {
 
     const chartOptions = {
         responsive: true,
-        maintainAspectRation: false,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: false
@@ -78,13 +78,13 @@ function Analytics() {
         scales: {
             x: {
                 ticks: {
-                    maxticketsLimit: 10,
+                    maxTicksLimit: 10,
                     font: { size: 10 }
                 }
             },
             y: {
                 ticks: {
-                    maxTicketsLimit: 10,
+                    maxTicksLimit: 10,
                     font: { size: 10 }
                 }
             }
@@ -99,7 +99,7 @@ function Analytics() {
         }
     }
 
-    const TempChartData = {
+    const tempChartData = {
         labels: timestamps,
         datasets: [{
             label: 'Temperature',
@@ -242,7 +242,7 @@ function Analytics() {
                 </div>
             </div>
 
-            <div className="into-text">
+            <div className="info-text">
                 Showing data from {stats.count} readings
             </div>
         </div>

@@ -142,10 +142,10 @@ def get_stats():
     """Return stats summary of sensor data"""
 
     #get limit from query paramter (lastt 100 readings)
-    limit = request.args.get('limit', defaul=100, type=int)
+    limit = request.args.get('limit', default=100, type=int)
     limit = min(limit, 1000)
 
-    readings = get_recent_reading(limit)
+    readings = get_recent_readings(limit)
 
     if not readings:
         return jsonify({
@@ -154,7 +154,7 @@ def get_stats():
 
     #extract values
     temps = [r['temperature'] for r in readings]
-    humdidities = [r['humidity'] for r in readings]
+    humidities = [r['humidity'] for r in readings]
     aqs = [r['air_quality'] for r in readings]
 
     #calc stats
@@ -181,7 +181,7 @@ def get_stats():
         },
     }
 
-    return jsonift(stats)
+    return jsonify(stats)
 
 if __name__ == '__main__':
 
