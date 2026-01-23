@@ -36,4 +36,36 @@ def validate_reading(temp, humidity, air_quality):
     recent_values['air_quality'].append(air_quality)
 
     #keeps only last MAX_HISTORY readings
-    if len
+    if len(recent_values['temp']) > MAX_HISTORY:
+        recent_values['temp'].pop(0)
+        recent_values['humidity'].pop(0)
+        recent_values['air_quality'].pop(0)
+
+    #check for stuck sensors (given enough history)
+    if len(recent_values['temp']) >= MAX_HISTORY:
+        if len(set(recent_values['temp'])) == 1:
+            issues.append("Temperature sensor stuck (no variation)")
+
+        if len(set(recent_values['humidity'])) == 1:
+            issues.append("Humidity sensor stuck (no variation)")
+
+        if len(set(recent_values['air_quality'])) == 1:
+            issues.append("Air quality sensor stuck (no variation)")
+
+    #determine overall health status
+    if len(issues) == 0:
+        health = "good"
+    elif len(issues) <= 2:
+        health = "degraded"
+    else:
+        health = "failed"
+
+    return {
+        'valid': len(issues) == 0,
+        'issues': issues,
+        'health': health
+    }
+
+
+
+        
