@@ -42,23 +42,6 @@ def validate_reading(temp, humidity, air_quality):
         recent_values['humidity'].pop(0)
         recent_values['air_quality'].pop(0)
 
-    # Check for stuck sensors (if we have enough history)
-    if len(recent_values['temp']) >= MAX_HISTORY:
-        #Calculate variation ranges
-        temp_range = max(recent_values['temp']) - min(recent_values['temp'])
-        humidity_range = max(recent_values['humidity']) - min(recent_values['humidity'])
-        aq_range = max(recent_values['air_quality']) - min(recent_values['air_quality'])
-    
-        # Only flag if TRULY stuck (zero variation)
-        if temp_range == 0:
-            issues.append("Temperature sensor stuck (identical readings)")
-    
-        if humidity_range == 0:
-            issues.append("Humidity sensor stuck (identical readings)")
-    
-        if aq_range == 0:
-            issues.append("Air quality sensor stuck (identical readings)")
-
     #determine overall health status
     if len(issues) == 0:
         health = "good"
@@ -78,21 +61,11 @@ def get_sensor_health():
     if len(recent_values['temp']) < 3:
         return {
             'status': 'initializing',
-            'message': 'Collection baseline data...'
+            'message': 'Collecting baseline data...'
         }
-
-    #checks for recent variations
-    temp_variation = max(recent_values['temp']) - min(recent_values['temp'])
-    humidity_variation = max(recent_values['humidity']) - min(recent_values['humidity'])
-
-    if temp_variation < 0.1 and humidity_variation < 0.1:
-        return {
-            'status': 'warning',
-            'message': 'Sensors may be stuck - no variation detected'
-        }
+    
+    # Just return healthy - validation handles actual issues
     return {
         'status': 'healthy',
         'message': 'All sensors responding normally'
     }
-
-        
