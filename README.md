@@ -54,14 +54,14 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 #### Core Features:
 - [x] SQLite database
 - [x] Historical data page (/history) with date filters
-- [ ] Analytics page with basic stats
+- [x] Analytics page with basic stats
 - [ ] Better decision logic:
     - [ ] Hysteresis (prevent flip-flopping)
     - [ ] Trend arrows (rising/falling)
     - [ ] Rolling averages (5min, 30min)
 - [ ] More REST endpoints:
     - [ ] /api/readings?start=X&end=Y
-    - [ ] /api/stats
+    - [x] /api/stats
     - [ ] /api/export
 - [ ] Unit tests (pytest) for decision logic
 - [ ] Export data (CSV)
