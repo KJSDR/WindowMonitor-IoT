@@ -5,6 +5,7 @@ import json
 import threading
 import time
 from database import insert_reading, get_recent_readings
+from validation import validation_reading, get_sensor_health
 
 """
 Environmental monitoring REST API
@@ -44,9 +45,25 @@ def read_serial_continuously():
                 try:
                     #parses the json from esp32
                     data = json.loads(line)
+                    #validate readings
+                    validation = validate_reading(
+                        data['temp'],
+                        data['humidity'],
+                        data['air_quality']
+                    )
+                    #add variation info to data
+                    data['validation'] = validation
+
                     latest_reading = data
-                    print(f"Updated: Temp={data['temp']}°F, Humidity={data['humidity']}%, AQ={data['air_quality']}")
-                    insert_reading(data) #stores reading in db
+
+                    #log readings with validation status
+                    if validation['valid']:
+                        print(f"Updated: Temp={data['temp']}°F, Humidity={data['humidity']}%, AQ={data['air_quality']}")
+                    else:
+                        print(f"Warning: {', '.join(validation['issues'])}")
+                    #still store in database (even if invalid still want for analysis)
+                    insert_reading(data)
+                    
                 except json.JSONDecodeError:
                     pass
 
