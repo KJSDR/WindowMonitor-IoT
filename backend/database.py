@@ -45,8 +45,8 @@ def insert_reading(data):
     cursor = conn.cursor()
 
     #get validation status
-    validate = data.get('validation', {})
-    is_valid = validation.get('valid', True)
+    validation = data.get('validation', {})
+    is_valid = 1 if validation.get('valid', True) else 0
 
     #inserts new reading by using server_time if it is there, otherise it is current time
     cursor.execute('''
@@ -56,7 +56,7 @@ def insert_reading(data):
         data.get('server_time', datetime.now().isoformat()),
         data.get('temp'),
         data.get('humidity'),
-        data.get('air_quality')
+        data.get('air_quality'),
         is_valid
     ))
 

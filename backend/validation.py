@@ -42,16 +42,22 @@ def validate_reading(temp, humidity, air_quality):
         recent_values['humidity'].pop(0)
         recent_values['air_quality'].pop(0)
 
-    #check for stuck sensors (given enough history)
+    # Check for stuck sensors (if we have enough history)
     if len(recent_values['temp']) >= MAX_HISTORY:
-        if len(set(recent_values['temp'])) == 1:
-            issues.append("Temperature sensor stuck (no variation)")
-
-        if len(set(recent_values['humidity'])) == 1:
-            issues.append("Humidity sensor stuck (no variation)")
-
-        if len(set(recent_values['air_quality'])) == 1:
-            issues.append("Air quality sensor stuck (no variation)")
+        #Calculate variation ranges
+        temp_range = max(recent_values['temp']) - min(recent_values['temp'])
+        humidity_range = max(recent_values['humidity']) - min(recent_values['humidity'])
+        aq_range = max(recent_values['air_quality']) - min(recent_values['air_quality'])
+    
+        # Only flag if TRULY stuck (zero variation)
+        if temp_range == 0:
+            issues.append("Temperature sensor stuck (identical readings)")
+    
+        if humidity_range == 0:
+            issues.append("Humidity sensor stuck (identical readings)")
+    
+        if aq_range == 0:
+            issues.append("Air quality sensor stuck (identical readings)")
 
     #determine overall health status
     if len(issues) == 0:

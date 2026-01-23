@@ -71,6 +71,8 @@ def read_serial_continuously():
 
     except Exception as e:
         print(f"Serial error: {e}")
+        import traceback
+        traceback.print_exc() #show full error
         print("Attempting to reconnect in 5 seconds...")
         time.sleep(5)
         #retries connection
@@ -176,9 +178,9 @@ def get_stats():
         return jsonify({'error': 'No valid data avaiable'})
 
     #extract values
-    temps = [r['temperature'] for r in readings]
-    humidities = [r['humidity'] for r in readings]
-    aqs = [r['air_quality'] for r in readings]
+    temps = [r['temperature'] for r in valid_readings]
+    humidities = [r['humidity'] for r in valid_readings]
+    aqs = [r['air_quality'] for r in valid_readings]
 
     #calc stats
     stats = {

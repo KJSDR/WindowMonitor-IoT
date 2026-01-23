@@ -65,4 +65,4 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
     - [ ] /api/export
 - [ ] Unit tests (pytest) for decision logic
 - [ ] Export data (CSV)
-- [ ] Data validation (detect bad sensor readings)
+- [x] Data validation (detect bad sensor readings)
