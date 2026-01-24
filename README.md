@@ -174,7 +174,7 @@ docs/             Project screenshots
 
 ---
 
-## 📄 **License**
+## **License**
 
 MIT
 
