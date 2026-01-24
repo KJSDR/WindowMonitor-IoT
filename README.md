@@ -96,7 +96,13 @@ python3 -m pytest test_logic.py -v
 ![Dashboard](docs/dashboard.png)
 *Live sensor readings with trend graphs*
 
-![Hardware Setup](docs/breadboard.jpg)
+![Analytics](docs/analytics.png)
+*Historical trends and statistical summary*
+
+![History](docs/history.png)
+*Paginated data table with CSV export*
+
+![Hardware Setup](docs/esp32.jpg)
 *ESP32 + DHT22 + MQ-135 on breadboard*
 
 ---
