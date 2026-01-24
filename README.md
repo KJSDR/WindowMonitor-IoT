@@ -56,10 +56,10 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 - [x] Historical data page (/history) with date filters
 - [x] Analytics page with basic stats
 - [x] Hysteresis (prevent flip-flopping)
-- [ ] More REST endpoints:
+- [x] More REST endpoints:
     - [x] /api/readings?limit=X
     - [x] /api/stats
-    - [ ] /api/export
+    - [x] /api/export
 - [ ] Unit tests (pytest) for decision logic
-- [ ] Export data (CSV)
+- [x] Export data (CSV)
 - [x] Data validation (detect bad sensor readings)
