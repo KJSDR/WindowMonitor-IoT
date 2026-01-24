@@ -3,8 +3,6 @@
 
 Full-stack IoT system with embedded firmware, Flask backend, and React dashboard. Monitors temperature, humidity, and air quality to provide intelligent window recommendations.
 
-**Built in one week** to explore hardware-software integration and systems architecture.
-
 ---
 
 ## **Highlights**
