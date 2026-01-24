@@ -63,9 +63,10 @@ ESP32 + Sensors  →  Flask API  →  React Dashboard
 ---
 
 ## 🚀 **Running the Project**
-```bash
 
 **Note:** Requires ESP32 hardware with DHT22 and MQ-135 sensors. See hardware setup below.
+
+```bash
 # Backend
 cd backend && pip3 install -r requirements.txt && python3 app.py
 
