@@ -1,65 +1,164 @@
-# MK.1 – Environmental Monitoring & Decision System
+# Window Monitor
+**Real-Time Environmental Monitoring & Decision System**
 
-## Overview
-Monitors temperature, humidity, and air quality to recommend when to open or close your window. Built to explore full-stack IoT architecture - from embedded firmware to web dashboard.
+Full-stack IoT system with embedded firmware, Flask backend, and React dashboard. Monitors temperature, humidity, and air quality to provide intelligent window recommendations.
 
-## Tech Stack
-- **Firmware:** Embedded C++ on ESP32 (PlatformIO)
-- **Backend:** Python Flask REST API with multi-threading
-- **Frontend:** React/Vite + Chart.js
-- **Hardware:** DHT22 (temp/humidity), MQ-135 (air quality)
+**Built in one week** to explore hardware-software integration and systems architecture.
 
-## Architecture
-ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Dashboard
+---
 
-## Features
-- Real-time sensor readings (2s intervals)
-- Live trend graphs (60s of data)
-- Threshold-based OPEN/CLOSE recommendations
-- Error handling and reconnection logic
+## 🎯 **Highlights**
 
-## Decision Logic
+- ✅ **Full-stack IoT** - ESP32 firmware → Flask API → React dashboard
+- ✅ **Real hardware** - DHT22 + MQ-135 sensors on ESP32
+- ✅ **Smart logic** - Hysteresis prevents flip-flopping, validation catches bad data
+- ✅ **3 pages** - Live dashboard, history table, analytics charts
+- ✅ **Professional** - SQLite database, unit tests (pytest), CSV export
+
+---
+
+## 🏗️ **Architecture**
+```
+ESP32 + Sensors  →  Flask API  →  React Dashboard
+(Embedded C++)      (Python)      (JavaScript)
+     ↓                  ↓              ↓
+  Serial JSON      SQLite DB    Chart.js Graphs
+```
+
+---
+
+## 🛠️ **Tech Stack**
+
+**Hardware:** ESP32 Feather, DHT22, MQ-135  
+**Firmware:** C++ (PlatformIO)  
+**Backend:** Python, Flask, SQLite, pytest  
+**Frontend:** React, Vite, Chart.js  
+
+---
+
+## ✨ **Key Features**
+
+**Dashboard:**
+- Live sensor readings (updates every 2 seconds)
+- 60-second trend graphs for temp/humidity/air quality
+- OPEN/CLOSE recommendation with reasoning
+- Sensor health status badge
+
+**History:**
+- Paginated data table (50-1000 readings)
+- Warning indicators for invalid data
+- Downloadable CSV export
+
+**Analytics:**
+- Statistical summary (min/max/avg)
+- Large historical trend charts
+- Filters invalid readings from calculations
+
+**Engineering:**
+- **Hysteresis logic** - ±2°F/5%/50 stability windows prevent oscillation
+- **Data validation** - Detects out-of-range sensor values
+- **Multi-threading** - Concurrent serial reading + API serving
+- **Error handling** - Auto-reconnection, validation feedback
+
+---
+
+## 🚀 **Running the Project**
+```bash
+
+**Note:** Requires ESP32 hardware with DHT22 and MQ-135 sensors. See hardware setup below.
+# Backend
+cd backend && pip3 install -r requirements.txt && python3 app.py
+
+# Frontend  
+cd frontend && npm install && npm run dev
+
+# Firmware
+cd firmware && pio run --target upload
+```
+
+**Dashboard:** http://localhost:5173  
+**API:** http://localhost:5001
+
+---
+
+## 🧪 **Testing**
+```bash
+cd backend
+python3 -m pytest test_logic.py -v
+# 9 tests: validation, hysteresis, stats filtering
+```
+
+---
+
+## 📸 **Screenshots**
+
+![Dashboard](docs/dashboard.png)
+*Live sensor readings with trend graphs*
+
+![Hardware Setup](docs/breadboard.jpg)
+*ESP32 + DHT22 + MQ-135 on breadboard*
+
+---
+
+## 🧠 **Decision Logic**
+
 **Thresholds:**
 - Temperature: 60-78°F
-- Humidity: < 70%
-- Air Quality: > 500
+- Humidity: <70%
+- Air Quality: >500
 
-- If any threshold violated -> **CLOSE**
-- All favorable -> **OPEN**
+**Hysteresis windows** prevent flip-flopping:
+- Currently OPEN → needs temp >80°F to close (78+2)
+- Currently CLOSED → needs temp <76°F to open (78-2)
 
-**Stability Window:**
-- To do
+Same logic for humidity and air quality.
 
-## How to Run Locally
-- backend: cd backend -> pip3 install -r requirements.txt -> python3 app.py
-- frontend: cd frontend -> npm install -> npm run dev
-- firmware: upload via PlatformIO to ESP32
+---
 
-## ESP32 / Breadboard / Sensors / Wiring
-<img src="esp32.jpg" alt="ESP32 wiring" height="700" width="400">
+## 📊 **API Endpoints**
+```
+GET /api/latest         # Current readings + recommendation
+GET /api/readings       # Historical data (paginated)
+GET /api/stats          # Min/max/avg statistics
+GET /api/export         # Download CSV
+GET /api/sensor-health  # Sensor status
+```
 
-## Build notes
+---
 
-### Completed (Scope for intensive)
-- ESP32 firmware reading 2 sensors (3 readings)
-- Python Flask REST API
-- Real-time React/Vite dashboard
-- Live sensor values
-- 3 live-updating graphs
-- OPEN/CLOSE recommendation logic
-- UI
+## 🎓 **What I Learned**
 
-### To Do
+**Systems:**
+- Multi-layer debugging (firmware → backend → frontend)
+- REST API design with pagination
+- Control systems (hysteresis implementation)
 
-#### Core Features:
-- [x] SQLite database
-- [x] Historical data page (/history) with date filters
-- [x] Analytics page with basic stats
-- [x] Hysteresis (prevent flip-flopping)
-- [x] More REST endpoints:
-    - [x] /api/readings?limit=X
-    - [x] /api/stats
-    - [x] /api/export
-- [ ] Unit tests (pytest) for decision logic
-- [x] Export data (CSV)
-- [x] Data validation (detect bad sensor readings)
+**Hardware:**
+- Serial communication and JSON protocols
+- Quality matters (swapped ESP32 after cheap one failed)
+- Sensor precision limits affect validation logic
+
+**Data:**
+- False positives taught me to tune validation (DHT22 precision = ±1°F)
+- Filtering invalid readings from statistics
+- Time-series data handling
+
+---
+
+## 📁 **Project Structure**
+```
+backend/          Flask API, database, validation, tests
+frontend/         React dashboard, history, analytics
+firmware/         ESP32 C++ code
+data/            SQLite database
+```
+
+---
+
+## 📄 **License**
+
+MIT
+
+---
+
+Built by Killian - Exploring systems engineering and IoT
