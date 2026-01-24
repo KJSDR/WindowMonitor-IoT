@@ -110,7 +110,7 @@ python3 -m pytest test_logic.py -v
       <p align="center"><i>Paginated data table with CSV export</i></p>
     </td>
     <td width="50%">
-      <img src="docs/breadboard.jpg" alt="Hardware" width="100%">
+      <img src="docs/esp32.jpg" alt="Hardware" width="100%">
       <p align="center"><i>ESP32 + DHT22 + MQ-135 on breadboard</i></p>
     </td>
   </tr>
