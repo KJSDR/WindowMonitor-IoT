@@ -93,21 +93,28 @@ python3 -m pytest test_logic.py -v
 
 ## 📸 **Screenshots**
 
-<img src="docs/dashboard.png" alt="Dashboard" width="500">
-
-*Live sensor readings with trend graphs*
-
-<img src="docs/analytics.png" alt="Analytics" width="500">
-
-*Historical trends and statistical summary*
-
-<img src="docs/history.png" alt="History" width="500">
-
-*Paginated data table with CSV export*
-
-<img src="docs/esp32.jpg" alt="Hardware Setup" width="500">
-
-*ESP32 + DHT22 + MQ-135 on breadboard*
+<table>
+  <tr>
+    <td width="50%">
+      <img src="docs/dashboard.png" alt="Dashboard" width="100%">
+      <p align="center"><i>Live sensor readings with trend graphs</i></p>
+    </td>
+    <td width="50%">
+      <img src="docs/analytics.png" alt="Analytics" width="100%">
+      <p align="center"><i>Historical trends and statistical summary</i></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="docs/history.png" alt="History" width="100%">
+      <p align="center"><i>Paginated data table with CSV export</i></p>
+    </td>
+    <td width="50%">
+      <img src="docs/breadboard.jpg" alt="Hardware" width="100%">
+      <p align="center"><i>ESP32 + DHT22 + MQ-135 on breadboard</i></p>
+    </td>
+  </tr>
+</table>
 
 ---
 
