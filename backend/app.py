@@ -17,13 +17,15 @@ makes JSON endpoints for it to connect to a dashboard.
 app = Flask(__name__)
 CORS(app) # Enable CORS for the react frontend (allows requests from one domain to another)
 
-# tores most recent sensor reading in the memory
+#stores most recent sensor reading in the memory
 latest_reading = {
     "temp": 0,
     "humidity": 0,
     "air_quality": 0,
     "timestamp": 0
 }
+#track current recs state for hysteresis
+current_state = "UNKNOWN" #OPEN / CLOSE / UNKNOWN
 
 #serial port config
 SERIAL_PORT = '/dev/cu.usbserial-022AF20E' #update to whatever local port is
@@ -104,6 +106,7 @@ def health():
 
 def calculate_recommendation(temp, humidity, air_quality):
     """Simple decision logic"""
+    global current_state
 
     #defines the environmental thesholds (can change to whatever)
     TEMP_MIN = 60
@@ -111,25 +114,56 @@ def calculate_recommendation(temp, humidity, air_quality):
     HUMIDITY_MAX = 70
     AQ_MIN = 500
 
-    reasons = []
+    #hysterisis windows (stability buffers)
+    TEMP_WINDOW = 2 # +- 2 degrees F
+    HUMIDITY_WINDOW = 5 # +- 5%
+    AQ_WINDOW = 50 # +- 50 units
 
-    #checks each condition and collects reasons for the alerts
-    if air_quality < AQ_MIN:
-        reasons.append("Poor air quality")
-    if temp > TEMP_MAX:
-        reasons.append("Temperature too high")
-    if temp < TEMP_MIN:
-        reasons.append("Temperature too low")
-    if humidity > HUMIDITY_MAX:
-        reasons.append("Humidity too high")
+    #calc if conditions favor OPEN or CLOSE
+    reasons_close = []
+    reasons_open = []
 
-    #returns the recommendation based on if any alerts came up
-    if reasons:
+    #check each condition with hysterisis
+    if current_state == "CLOSE":
+        #current closed - need good conditions to open
+        if air_quality < AQ_MIN - AQ_WINDOW:
+            reasons_close.append("Poor air quality")
+        if temp > TEMP_MAX + TEMP_WINDOW:
+            reasons_close.append("Temperature too high")
+        if temp < TEMP_MIN - TEMP_WINDOW:
+            reasons_close.append("Temperature too low")
+        if humidity > HUMIDITY_MAX + HUMIDITY_WINDOW:
+            reasons_close.append("Humidity too high")
+    elif current_state == "OPEN":
+        #current open - need clearly bad conditions to close
+        if air_quality < AQ_MIN + AQ_WINDOW:
+            reasons_close.append("Poor air quality")
+        if temp > TEMP_MAX - TEMP_WINDOW:
+            reasons_close.append("Temperature too high")
+        if temp < TEMP_MIN + TEMP_WINDOW:
+            reasons_close.append("Temperature too low")
+        if humidity > HUMIDITY_MAX - HUMIDITY_WINDOW:
+            reasons_close.append("Humidity too high")
+    else:
+        #unknown state (first run) - use standard thesholds
+        if air_quality < AQ_MIN:
+            reasons_close.append("Poor air quality")
+        if temp > TEMP_MAX:
+            reasons_close.append("Temperature too high")
+        if temp < TEMP_MIN:
+            reasons_close.append("Temperature too low")
+        if humidity > HUMIDITY_MAX:
+            reasons_close.append("Humidity too high")
+
+    #makes decisions and gives reason
+    if reasons_close:
+        current_state = "CLOSE"
         return {
             "recommendation": "CLOSE",
-            "reason": ", ".join(reasons)
+            "reason": ", ".join(reasons_close)
         }
     else:
+        current_state = "OPEN"
         return {
             "recommendation": "OPEN",
             "reason": "All conditions favorable"
