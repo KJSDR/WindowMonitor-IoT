@@ -57,10 +57,8 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 - [x] Analytics page with basic stats
 - [ ] Better decision logic:
     - [ ] Hysteresis (prevent flip-flopping)
-    - [ ] Trend arrows (rising/falling)
-    - [ ] Rolling averages (5min, 30min)
 - [ ] More REST endpoints:
-    - [ ] /api/readings?start=X&end=Y
+    - [x] /api/readings?limit=X
     - [x] /api/stats
     - [ ] /api/export
 - [ ] Unit tests (pytest) for decision logic
