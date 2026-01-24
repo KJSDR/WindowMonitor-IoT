@@ -55,8 +55,7 @@ ESP32 → USB Serial → Flask Backend REST API  → SQLite DB → React/Vite Da
 - [x] SQLite database
 - [x] Historical data page (/history) with date filters
 - [x] Analytics page with basic stats
-- [ ] Better decision logic:
-    - [ ] Hysteresis (prevent flip-flopping)
+- [x] Hysteresis (prevent flip-flopping)
 - [ ] More REST endpoints:
     - [x] /api/readings?limit=X
     - [x] /api/stats

@@ -243,6 +243,50 @@ def sensor_health():
 
     return jsonify(health)
 
+@app.route('/api/export')
+def export_data():
+    """Export sensor data as CSV"""
+    import csv
+    from io import StringIO
+
+    #get limit from query parameter
+    limit = request.args.get('limit', default=100, type=int)
+    limit = min(limit, 10000) #caps at 10k rows
+
+    #get readings
+    readings = get_recent_readings(limit)
+
+    if not readings:
+        return jsonify({'error': 'No data available'}), 404
+
+    #create CSV in memory
+    output = StringIO()
+    writer = csv.writer(output)
+
+    #write header
+    writer.writerow(['Timestamp', 'Temperature (°F)', 'Humidity (%)', 'Air Quality', 'Valid'])
+
+    #write data rows (reverse oldest first)
+    for reading in reversed(readings):
+        writer.writerow([
+            reading['timestamp'],
+            f"{reading['temperature']:.1f}",
+            f"{reading['humidity']:.1f}",
+            reading['air_quality'],
+            'Yes' if reading.get('is_valid', True) else 'No'
+        ])
+
+    #prepare response
+    output.seek(0)
+
+    from flask import make_response
+    response = make_response(output.getvalue())
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = 'attachment; filename=sensor_data.csv'
+
+    return response
+
+
 if __name__ == '__main__':
 
     #starts serial readings in background thread, daemon True makes it exit with main program?

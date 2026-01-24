@@ -46,6 +46,15 @@ function History() {
                         <option value={500}>500 readings</option>
                     </select>
                 </label>
+                <div className="controls-right">
+                    <a
+                        href={`http://127.0.0.1:5001/api/export?limit=${limit}`}
+                        className="export-btn"
+                        download
+                    >
+                        Export CSV
+                    </a>
+                </div>
                 <a href="/" className="back-link">Back to Dashboard</a>
             </div>
 

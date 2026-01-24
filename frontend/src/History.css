@@ -103,3 +103,24 @@ tbody tr:hover {
     cursor: help;
     font-size: 0.875rem;
   }
+
+  .controls-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .export-btn {
+    padding: 6px 12px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  
+  .export-btn:hover {
+    background: #5568d3;
+  }
