@@ -7,7 +7,7 @@ Full-stack IoT system with embedded firmware, Flask backend, and React dashboard
 
 ---
 
-## 🎯 **Highlights**
+## **Highlights**
 
 - ✅ **Full-stack IoT** - ESP32 firmware → Flask API → React dashboard
 - ✅ **Real hardware** - DHT22 + MQ-135 sensors on ESP32
@@ -17,7 +17,7 @@ Full-stack IoT system with embedded firmware, Flask backend, and React dashboard
 
 ---
 
-## 🏗️ **Architecture**
+## **Architecture**
 ```
 ESP32 + Sensors  →  Flask API  →  React Dashboard
 (Embedded C++)      (Python)      (JavaScript)
@@ -27,7 +27,7 @@ ESP32 + Sensors  →  Flask API  →  React Dashboard
 
 ---
 
-## 🛠️ **Tech Stack**
+## **Tech Stack**
 
 **Hardware:** ESP32 Feather, DHT22, MQ-135  
 **Firmware:** C++ (PlatformIO)  
@@ -36,7 +36,7 @@ ESP32 + Sensors  →  Flask API  →  React Dashboard
 
 ---
 
-## ✨ **Key Features**
+## **Key Features**
 
 **Dashboard:**
 - Live sensor readings (updates every 2 seconds)
@@ -62,7 +62,7 @@ ESP32 + Sensors  →  Flask API  →  React Dashboard
 
 ---
 
-## 🚀 **Running the Project**
+## **Running the Project**
 
 **Note:** Requires ESP32 hardware with DHT22 and MQ-135 sensors. See hardware setup below.
 
@@ -82,7 +82,7 @@ cd firmware && pio run --target upload
 
 ---
 
-## 🧪 **Testing**
+## **Testing**
 ```bash
 cd backend
 python3 -m pytest test_logic.py -v
@@ -91,7 +91,7 @@ python3 -m pytest test_logic.py -v
 
 ---
 
-## 📸 **Screenshots**
+## **Screenshots**
 
 <table>
   <tr>
@@ -118,7 +118,7 @@ python3 -m pytest test_logic.py -v
 
 ---
 
-## 🧠 **Decision Logic**
+## **Decision Logic**
 
 **Thresholds:**
 - Temperature: 60-78°F
@@ -133,7 +133,7 @@ Same logic for humidity and air quality.
 
 ---
 
-## 📊 **API Endpoints**
+## **API Endpoints**
 ```
 GET /api/latest         # Current readings + recommendation
 GET /api/readings       # Historical data (paginated)
@@ -144,7 +144,7 @@ GET /api/sensor-health  # Sensor status
 
 ---
 
-## 🎓 **What I Learned**
+## **What I Learned**
 
 **Systems:**
 - Multi-layer debugging (firmware → backend → frontend)
@@ -163,12 +163,13 @@ GET /api/sensor-health  # Sensor status
 
 ---
 
-## 📁 **Project Structure**
+## **Project Structure**
 ```
 backend/          Flask API, database, validation, tests
 frontend/         React dashboard, history, analytics
 firmware/         ESP32 C++ code
-data/            SQLite database
+data/             SQLite database
+docs/             Project screenshots
 ```
 
 ---
